@@ -1,8 +1,9 @@
+import string
 import tempfile
 import unittest
 from pathlib import Path
 
-from letters_frequency import letters_in_file
+from letters_frequency import letters_count, letters_in_file
 
 TEST_TEXT = """
 Mr. Jock, TV quiz PhD, bags few lynx.
@@ -24,4 +25,12 @@ class TestFileParser(unittest.TestCase):
         self.assertEqual(
             list(letters_in_file(self.test_text_path)),
             "m r j o c k t v q u i z p h d b a g s f e w l y n x".split() * 2,
+        )
+
+    def test_letter_count(self):
+        count = letters_count(self.test_text_path)
+
+        self.assertEqual(
+            count,
+            {letter: 2 for letter in string.ascii_lowercase}
         )
