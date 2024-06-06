@@ -5,8 +5,7 @@ from pathlib import Path
 
 from letters_frequency import caesar_cipher, letters_count, letters_in_file
 
-TEST_TEXT = """
-Mr. Jock, TV quiz PhD, bags few lynx.
+TEST_TEXT = """Mr. Jock, TV quiz PhD, bags few lynx.
 Mr. Jock, TV quiz PhD, bags few lynx.
 """
 
@@ -56,10 +55,10 @@ class TestCaesarCipher(unittest.TestCase):
         )
 
         with open(encrypted_text_path, "r") as fhandle:
-            encrypted_text = "\n".join(fhandle.readlines())
+            encrypted_text = "".join(fhandle.readlines())
 
         self.assertEqual(
             encrypted_text,
             "Ze. Wbpx, GI dhvm CuQ, ontf srj ylak.\n"
-            "Ze. Wbpx, GI dhvm CuQ, ontf srj ylak."
+            "Ze. Wbpx, GI dhvm CuQ, ontf srj ylak.\n"
         )
