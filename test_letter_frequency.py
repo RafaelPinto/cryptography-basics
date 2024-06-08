@@ -3,7 +3,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from letters_frequency import caesar_cipher, letters_count, letters_in_file
+from letters_frequency import (
+    caesar_cipher,
+    letters_count,
+    letters_in_file,
+    rotate_text,
+)
 
 TEST_TEXT = """Mr. Jock, TV quiz PhD, bags few lynx.
 Mr. Jock, TV quiz PhD, bags few lynx.
@@ -62,3 +67,6 @@ class TestCaesarCipher(unittest.TestCase):
             "Ze. Wbpx, GI dhvm CuQ, ontf srj ylak.\n"
             "Ze. Wbpx, GI dhvm CuQ, ontf srj ylak.\n"
         )
+
+    def test_rotate_text_same_text_with_rot_zero(self):
+        self.assertEqual(TEST_TEXT, rotate_text(text=TEST_TEXT, rot=0))
