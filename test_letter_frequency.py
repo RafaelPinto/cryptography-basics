@@ -70,3 +70,11 @@ class TestCaesarCipher(unittest.TestCase):
 
     def test_rotate_text_same_text_with_rot_zero(self):
         self.assertEqual(TEST_TEXT, rotate_text(text=TEST_TEXT, rot=0))
+
+    def test_rotate_text_negative_rotation(self):
+        input_text = "abcd"
+        expected_output_text = "xyza"
+        self.assertEqual(
+            expected_output_text,
+            rotate_text(text=input_text, rot=-3)
+        )
