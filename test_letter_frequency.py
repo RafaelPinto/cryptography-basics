@@ -93,3 +93,12 @@ class TestCaesarCipher(unittest.TestCase):
             rotate_text(text=input_text, substitution_table=trans_table),
             expected_output_text,
         )
+
+    def test_rotate_text_for_decryption(self):
+        input_text = "xyza"
+        expected_output_text = "abcd"
+        trans_table = build_substitution_table(rot=49, reversed=True)
+        self.assertEqual(
+            rotate_text(text=input_text, substitution_table=trans_table),
+            expected_output_text,
+        )
