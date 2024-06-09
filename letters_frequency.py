@@ -15,15 +15,26 @@ def letters_count(filepath: Path):
     return Counter(letters_in_file(filepath))
 
 
-def build_substitution_table(rot: int) -> Dict[int, int]:
-    """Build character substitution mapping."""
+def build_substitution_table(
+        rot: int,
+        reversed: bool = False
+        ) -> Dict[int, int]:
+    """Build letter substitution mapping between the alphabet letters
+    (clear text) and those rotated `rot` times (encrypted text).
+
+    If reversed is True, the result will map the encrypted text letters
+    to the clear text letters. This is useful in decrytion.
+    """
     alphabet = string.ascii_lowercase
     rot = rot % len(alphabet)
     alphabet_rot = alphabet[rot:] + alphabet[:rot]
-    return str.maketrans(
+    rotation_letters = [
         alphabet + alphabet.upper(),
         alphabet_rot + alphabet_rot.upper(),
-    )
+    ]
+    if reversed:
+        rotation_letters.reverse()
+    return str.maketrans(*rotation_letters)
 
 
 def rotate_text(text: str, substitution_table: Dict[int, int]) -> str:
