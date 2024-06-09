@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from letters_frequency import (
+    build_substitution_table,
     caesar_cipher,
     letters_count,
     letters_in_file,
@@ -69,20 +70,26 @@ class TestCaesarCipher(unittest.TestCase):
         )
 
     def test_rotate_text_same_text_with_rot_zero(self):
-        self.assertEqual(TEST_TEXT, rotate_text(text=TEST_TEXT, rot=0))
+        trans_table = build_substitution_table(rot=0)
+        self.assertEqual(
+            rotate_text(text=TEST_TEXT, substitution_table=trans_table),
+            TEST_TEXT,
+        )
 
     def test_rotate_text_negative_rotation(self):
         input_text = "abcd"
         expected_output_text = "xyza"
+        trans_table = build_substitution_table(rot=-3)
         self.assertEqual(
+            rotate_text(text=input_text, substitution_table=trans_table),
             expected_output_text,
-            rotate_text(text=input_text, rot=-3)
         )
 
     def test_rotate_text_with_rot_lt_alphabet_character_count(self):
         input_text = "abcd"
         expected_output_text = "xyza"
+        trans_table = build_substitution_table(rot=49)
         self.assertEqual(
+            rotate_text(text=input_text, substitution_table=trans_table),
             expected_output_text,
-            rotate_text(text=input_text, rot=49)
         )
