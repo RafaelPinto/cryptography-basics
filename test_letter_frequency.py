@@ -78,3 +78,11 @@ class TestCaesarCipher(unittest.TestCase):
             expected_output_text,
             rotate_text(text=input_text, rot=-3)
         )
+
+    def test_rotate_text_with_rot_lt_alphabet_character_count(self):
+        input_text = "abcd"
+        expected_output_text = "xyza"
+        self.assertEqual(
+            expected_output_text,
+            rotate_text(text=input_text, rot=49)
+        )
