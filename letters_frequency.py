@@ -4,6 +4,8 @@ from pathlib import Path
 import string
 from typing import Dict
 
+import matplotlib.pyplot as plt
+
 
 def letters_in_file(filepath: Path):
     with open(filepath, "r") as fhandle:
@@ -62,3 +64,30 @@ def caesar_cipher(clear_text_path: Path, rot: int, output_path: Path):
                 substitution_table=trans_table)
             )
 
+
+def main():
+    independence_file = Path("declaration-transcript.txt")
+    independence_rot13_file = Path("independence_rot13.txt")
+    caesar_cipher(
+        clear_text_path=independence_file,
+        rot=13,
+        output_path=independence_rot13_file,
+    )
+    independence_letter_count = letters_count(independence_rot13_file)
+
+    independence_letter_count_sorted = {
+        letter: independence_letter_count[letter]
+        for letter in string.ascii_lowercase
+    }
+
+    fig, axs = plt.subplots(1, 1, figsize=(9, 3))
+    axs.bar(
+        list(independence_letter_count_sorted.keys()),
+        list(independence_letter_count_sorted.values()),
+    )
+    fig.suptitle('Encryted Independence Declaration letter count')
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
