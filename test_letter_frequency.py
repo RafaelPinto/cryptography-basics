@@ -1,3 +1,4 @@
+from collections import Counter
 import string
 import tempfile
 import unittest
@@ -38,6 +39,38 @@ class TestFileParser(unittest.TestCase):
         self.assertEqual(
             count,
             {letter: 2 for letter in string.ascii_lowercase}
+        )
+
+
+class TestPDFParser(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.test_pdf_path = Path("sample-pdf.pdf")
+
+    def test_count_pdf_file_letters_wo_header_and_footer(self):
+        expected_text = """
+            This is the first paragraph on the first page.
+            This is the second paragraph on the first page.
+            This is the second paragraph on the second page.
+            This is the second paragraph on the second page.
+        """
+        expected_letter_count = Counter(
+            [
+                char.lower()
+                for char in expected_text
+                if char.lower() in string.ascii_lowercase
+            ]
+        )
+
+        self.assertEqual(
+            count_pdf_file_letters(
+                self.test_pdf_path,
+                page_start=0,
+                page_stop=2,
+                y_min=50,
+                y_max=760,
+            ),
+            expected_letter_count,
         )
 
 
