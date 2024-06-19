@@ -6,6 +6,8 @@ from typing import Dict
 
 import matplotlib.pyplot as plt
 
+from pypdf import PdfReader
+
 
 def letters_in_file(filepath: Path):
     with open(filepath, "r") as fhandle:
@@ -15,6 +17,31 @@ def letters_in_file(filepath: Path):
 
 def letters_count(filepath: Path):
     return Counter(letters_in_file(filepath))
+
+
+def count_pdf_file_letters(
+        pdf_filepath: Path,
+        page_start: int,
+        page_stop: int,
+        y_min: int,
+        y_max=int
+        ) -> Counter:
+
+    reader = PdfReader(pdf_filepath)
+    counter = Counter()
+
+    def visitor_body(text, cm, tm, font_dict, font_size):
+        y = tm[5]
+        if y > y_min and y < y_max:
+            if text.strip() != "":
+                counter.update(
+                    [letter.lower() for letter in re.findall(r"\w", text)]
+                )
+
+    for page_number in range(page_start, page_stop, 1):
+        page = reader.pages[page_number]
+        page.extract_text(visitor_text=visitor_body)
+    return counter
 
 
 def build_substitution_table(
