@@ -130,6 +130,32 @@ class TestPDFParser(unittest.TestCase):
             expected_letter_count,
         )
 
+    def test_count_pdf_file_letters_second_single_page(self):
+        expected_text = """
+            This is the header to be ignored
+            This is the second paragraph on the second page.
+            This is the second paragraph on the second page.
+            This is the footer to be ignored
+        """
+        expected_letter_count = Counter(
+            [
+                char.lower()
+                for char in expected_text
+                if char.lower() in string.ascii_lowercase
+            ]
+        )
+
+        self.assertEqual(
+            count_pdf_file_letters(
+                self.test_pdf_path,
+                page_start=1,
+                page_stop=2,
+                y_min=50,
+                y_max=760,
+            ),
+            expected_letter_count,
+        )
+
 
 class TestCaesarCipher(unittest.TestCase):
     @classmethod
