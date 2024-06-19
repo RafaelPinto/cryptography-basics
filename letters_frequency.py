@@ -9,6 +9,13 @@ import matplotlib.pyplot as plt
 from pypdf import PdfReader
 
 
+MONTESQUIEU_PATH = Path("./data/Montesquieu_0171-01_EBk_v6.0.pdf")
+MONTESQUIEU_PAGE_START = 29
+MONTESQUIEU_PAGE_STOP = 433
+MONTESQUIEU_Y_MIN = 50
+MONTESQUIEU_Y_MAX = 760
+
+
 def letters_in_file(filepath: Path):
     with open(filepath, "r") as fhandle:
         for line in fhandle:
@@ -107,12 +114,33 @@ def main():
         for letter in string.ascii_lowercase
     }
 
-    fig, axs = plt.subplots(1, 1, figsize=(9, 3))
-    axs.bar(
+    montesquieu_letter_count = count_pdf_file_letters(
+        pdf_filepath=MONTESQUIEU_PATH,
+        page_start=MONTESQUIEU_PAGE_START,
+        page_stop=MONTESQUIEU_PAGE_STOP,
+        y_min=MONTESQUIEU_Y_MIN,
+        y_max=MONTESQUIEU_Y_MAX,
+    )
+
+    montesquieu_letter_count_sorted = {
+        letter: montesquieu_letter_count[letter]
+        for letter in string.ascii_lowercase
+    }
+
+    _, axs = plt.subplots(2, 1, figsize=(14, 9))
+    axs[0].bar(
         list(independence_letter_count_sorted.keys()),
         list(independence_letter_count_sorted.values()),
     )
-    fig.suptitle('Encryted Independence Declaration letter count')
+    axs[0].set_title("Encrypted Independence Declaration letter count")
+    axs[0].set_ylabel("Letter count")
+    axs[1].bar(
+        list(montesquieu_letter_count_sorted.keys()),
+        list(montesquieu_letter_count_sorted.values()),
+    )
+    axs[1].set_title("Montesquieu letter count")
+    axs[1].set_ylabel("Letter count")
+
     plt.show()
 
 
