@@ -15,7 +15,7 @@ def letters_in_file(filepath: Path):
             yield from [letter.lower() for letter in re.findall(r"\w", line)]
 
 
-def letters_count(filepath: Path):
+def letters_count(filepath: Path) -> Counter:
     return Counter(letters_in_file(filepath))
 
 
