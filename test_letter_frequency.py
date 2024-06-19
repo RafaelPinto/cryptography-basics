@@ -7,6 +7,7 @@ from pathlib import Path
 from letters_frequency import (
     build_substitution_table,
     caesar_cipher,
+    count_pdf_file_letters,
     letters_count,
     letters_in_file,
     rotate_text,
@@ -67,8 +68,8 @@ class TestPDFParser(unittest.TestCase):
                 self.test_pdf_path,
                 page_start=0,
                 page_stop=2,
-                y_min=50,
-                y_max=760,
+                y_min=60,
+                y_max=700,
             ),
             expected_letter_count,
         )
